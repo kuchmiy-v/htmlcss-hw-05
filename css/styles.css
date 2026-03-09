@@ -86,6 +86,19 @@ header {
   font-size: 16px;
   line-height: 1.5;
   text-decoration: none;
+  transition: color 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+}
+
+.header-list .header-link.current::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 4px;
+  background-color: var(--ocean);
+  left: 0;
+  bottom: -24px;
+  border-radius: 2px;
 }
 
 .header-list .header-link:hover,
@@ -107,6 +120,10 @@ header {
 }
 .header-contact .header-item + .header-item {
   margin-left: 40px;
+}
+.header-contact .header-link:hover,
+.header-contact .header-link:focus {
+  color: var(--iris);
 }
 
 /* logo */
@@ -400,6 +417,38 @@ header {
 .portf-card-item {
   text-decoration: none;
 }
+.portf-card-item:hover .pcard-top-text,
+.portf-card-item:focus .pcard-top-text {
+  transform: translateY(0);
+}
+
+.pcard-top-wrap {
+  position: relative;
+  overflow: hidden;
+}
+.pcard-top-text {
+  position: absolute;
+  top: 0;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.5;
+  letter-spacing: 0.02em;
+  color: var(--cloud);
+  padding: 40px 32px;
+  background-color: var(--iris);
+  height: 100%;
+  transform: translateY(100%);
+  transition: transform 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: auto;
+}
+
+.portf-card-descript {
+  padding: 32px 16px;
+  border: 1px solid var(--cloud);
+}
+.portf-card-descript .section-title {
+  margin-top: 0;
+}
 
 /* button */
 
@@ -415,6 +464,10 @@ header {
   line-height: 1.2;
   text-decoration: none;
   text-align: center;
+  transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  /* transition: color 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  transition: (color, background-color, box-shadow) 250ms cubic-bezier(0.4, 0, 0.2, 1); */
+  cursor: pointer;
 }
 
 .button.primary {
@@ -423,6 +476,7 @@ header {
   background-color: var(--iris);
   text-decoration: none;
   border: 1px solid transparent;
+  transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 .button.primary:hover {
   background-color: var(--ocean);
@@ -501,6 +555,7 @@ footer {
   display: flex;
   justify-content: center;
   align-items: center;
+  transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 .footer-soc-icon {
   fill: var(--cloud);
@@ -511,4 +566,261 @@ footer {
 }
 .footer-soc-link:focus {
   background-color: var(--green);
+}
+
+/* backdrop + modal */
+.backdrop {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(46, 47, 66, 0.4);
+  transition:
+    opacity 250ms cubic-bezier(0.4, 0, 0.2, 1),
+    visibility 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  overflow-y: scroll;
+}
+.modal {
+  padding: 24px;
+  padding-top: 72px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 408px;
+  min-height: 506px;
+  background-color: var(--dairy);
+  border-radius: 4px;
+  transform: translate(-50%, -50%) scale(1);
+  transition: transform 250ms linear;
+}
+
+.backdrop.is-hidden .modal {
+  transform: translate(-50%, -50%) scale(0);
+}
+
+.modal-close {
+  position: absolute;
+  right: 24px;
+  top: 24px;
+  width: 24px;
+  height: 24px;
+  background: var(--cornflower);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 50%;
+}
+.modal-close:hover {
+  background: var(--ocean);
+  cursor: pointer;
+  fill: var(--white);
+}
+
+.is-hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  border: 0;
+  padding: 0;
+  white-space: nowrap;
+  clip-path: inset(100%);
+  clip: rect(0 0 0 0);
+  overflow: hidden;
+}
+
+.modal-title {
+  /* width: 360px; */
+  margin-bottom: 14px;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1.5;
+  text-align: center;
+  letter-spacing: 0.02em;
+  color: var(--navy-blue);
+}
+
+.form-field {
+  margin-bottom: 8px;
+}
+.input-wrap {
+  position: relative;
+  /* padding-right: 24px; */
+}
+
+.form-input {
+  width: 100%;
+  height: 40px;
+  background-color: transparent;
+  border: 1px solid rgba(33, 33, 33, 0.2);
+  border-radius: 4px;
+
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 1.17;
+  letter-spacing: 0.01em;
+  color: var(--slate);
+  padding-left: 38px;
+  /* outline-color: none; */
+  outline-color: var(--iris);
+}
+
+.form-input:focus {
+  /* border: 1px solid #4D5AE5;
+  border-radius: 4px;  */
+  /* border-color: var(--accent-color); */
+}
+.form-input:focus + .input-icon {
+  fill: var(--iris);
+}
+.form-input:not(:placeholder-shown):not(:focus):valid {
+}
+.form-input:not(:placeholder-shown):not(:focus):invalid {
+}
+
+.form-input::placeholder {
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 1.33;
+  letter-spacing: 0.04em;
+  color: rgba(117, 117, 117, 0.5);
+}
+
+.input-icon {
+  position: absolute;
+  left: 19px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.form-label {
+  display: inline-block;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 1.33;
+  letter-spacing: 0.04em;
+  color: #8e8f99;
+  margin-bottom: 4px;
+}
+
+.modal-comment {
+  padding: 12px;
+  width: 100%;
+  min-height: 120px;
+
+  font-family: Roboto, sans-serif;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 1.17;
+  letter-spacing: 0.01em;
+  color: var(--slate);
+
+  border: 1px solid rgba(33, 33, 33, 0.2);
+  border-radius: 4px;
+  outline-color: var(--iris);
+  background-color: transparent;
+  resize: none;
+}
+.modal-comment::placeholder {
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 1.33;
+  letter-spacing: 0.04em;
+  color: rgba(117, 117, 117, 0.5);
+}
+
+.check-text {
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 1.33;
+  letter-spacing: 0.04em;
+  color: #757575;
+  display: flex;
+  align-items: center;
+}
+.check-text::before {
+  content: " ";
+  width: 16px;
+  height: 16px;
+  border: 1.25px solid var(--navy-blue);
+  border-radius: 2px;
+  display: block;
+  margin-right: 7px;
+}
+.input-check:checked + .check-text::before {
+  background-color: var(--ocean);
+  border: none;
+  background-image: url(../images/check.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+}
+.a-privacy {
+  padding-left: 5px;
+  color: var(--accent-color);
+}
+
+/* по тз до дз для іконки галочки
+.check-text span {
+  width: 16px;
+  height: 16px;
+  border: 1.25px solid var(--hero-background-color);
+  border-radius: 2px;
+  margin-right: 7px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  fill: transparent;
+}
+.input-check:checked + .check-text span {
+  background-color: var(--icon-hover);
+  border: none;
+  fill: var(--cards-bg-color);
+} */
+
+/* ще один варіант, який часто зустрічається крапочка-перемикач:
+.check-text::after {
+  content: " ";
+  position: absolute;
+  left: 2px;
+  top: 2px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: block;
+  margin-right: 7px;
+  transition: transform 300ms linear, background-color 300ms linear;
+}
+.input-check:checked + .check-text::after {
+  transform: translate(18px);
+  background-color: #fff;
+}
+.input-check:checked + .check-text::before {
+  background-color: rgb(133, 197, 114);
+  border: none;
+} */
+
+.button.modal-sub {
+  display: block;
+  margin: 0 auto;
+  /* text-align: center; */
+  /* justify-content: center; */
+  margin-top: 16px;
+  width: 169px;
+  height: 56px;
+  font-family: Roboto, sans-serif;
+  color: var(--white);
+  background-color: var(--iris);
+  border: 1px solid transparent;
+  transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+.button.modal-sub:hover {
+  background-color: var(--ocean);
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
+}
+.button.modal-sub:focus {
+  background-color: var(--ocean);
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
+  /* border: 1px solid var(--icon-hover); */
 }
